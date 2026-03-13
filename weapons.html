@@ -1080,10 +1080,11 @@ if (typeof SupaDB !== 'undefined' && SupaDB.getClient && SupaDB.isConnected()) {
 
     /* ── Build Character Carousel HTML ── */
     function buildCharacterCarousel(weapon) {
-      var wId = weapon.id || weapon.slug;
-      var links = weaponCharLinks.filter(function (l) {
-        return String(l.weapon_id) === String(wId);
-      });
+  var wId = String(weapon.id || weapon.slug);
+
+var links = weaponCharLinks.filter(function (l) {
+  return String(l.weapon_id) === wId || String(l.weapon_slug) === wId;
+});
 
       if (links.length === 0 && allCharacters.length === 0) {
         return '<div class="char-empty">' + ((typeof I18n !== 'undefined') ? I18n.t('wpn_no_char') : 'No character data linked yet.') + '</div>';
