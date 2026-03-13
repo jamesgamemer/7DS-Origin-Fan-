@@ -725,7 +725,14 @@
       });
       document.getElementById('adminCharList').innerHTML=h;
     }
-    function filterAdminList(){var s=document.getElementById('adminSearch').value.toLowerCase();document.querySelectorAll('#adminCharList .admin-char-row').forEach(r=>{r.style.display=(r.getAttribute('data-name')||'').indexOf(s)!==-1?'':'none'})}
+    function filterAdminList(){
+  var s = document.getElementById('adminSearch').value.toLowerCase();
+
+  document.querySelectorAll('#adminCharList .admin-char-row').forEach(r=>{
+    var name = r.getAttribute('data-name') || '';
+    r.style.display = name.includes(s) ? '' : 'none';
+  });
+}
 
     /* ══════════════════════════════════════════════════════════
        WEAPONS DASHBOARD
