@@ -1096,7 +1096,9 @@ if (typeof SupaDB !== 'undefined' && SupaDB.getClient && SupaDB.isConnected()) {
         html += '<div class="char-carousel">';
 
         links.forEach(function (link) {
-          var char = allCharacters.find(function (c) { return c.id === link.character_id; });
+         var char = allCharacters.find(function (c) { 
+  return String(c.id) === String(link.character_id); 
+});
           if (!char) return;
 
           var badgeClass = link.is_signature ? 'signature' : 'recommended';
