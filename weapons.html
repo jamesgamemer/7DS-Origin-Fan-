@@ -867,6 +867,14 @@ if (typeof SupaDB !== 'undefined' && SupaDB.getClient && SupaDB.isConnected()) {
 
     allCharacters = cResult.data || [];
 
+    // Fetch weapon-character links
+var wcResult = await client
+  .from('weapon_characters')
+  .select('*')
+  .order('priority', { ascending: true });
+
+weaponCharLinks = wcResult.data || [];
+
     // Fetch links
     var wcResult = await client
       .from('weapon_characters')
