@@ -943,7 +943,7 @@ function filterWeaponList(){
         var isLinked=linkedCharacterIds.has(c.id);
         var isSig=signatureCharIds.has(c.id);
         var img=c.image||'https://placehold.co/80x80?text=?';
-        h+='<div class="char-link-card'+(isLinked?' linked':'')+'" data-cid="'+c.id+'" data-name="'+(c.name_en||c.name||'').toLowerCase()+'" onclick="toggleCharLink(this,\''+c.id+'\')">';
+        h+='<div class="char-link-card'+(isLinked?' linked':'')+'" data-cid="'+c.id+'" data-name="'+(c.name_en || c.name || c.slug || '').toLowerCase()+'" onclick="toggleCharLink(this,\''+c.id+'\')">';
         h+='<img src="'+img+'" alt="'+(c.name_en||c.name||'')+'" onerror="this.src=\'https://placehold.co/80x80?text=?\'"><div class="char-link-name">'+(c.name_en||c.name||'?')+'</div>';
         h+='<span class="char-link-rarity '+(c.rarity||'SR')+'">'+(c.rarity||'SR')+'</span>';
         h+='<span class="link-badge">Linked</span>';
@@ -1221,7 +1221,7 @@ function filterWeaponList(){
     function editCharacter(id){
       var c=allCharacters.find(ch=>ch.id===id);if(!c)return;
       editingId=id;
-      document.getElementById('formTitle').textContent='Edit: '+(c.name_en||c.name||'Unknown');
+      document.getElementById('formTitle').textContent='Edit: '+(c.name_en || c.name || c.slug || 'Unknown')
       document.getElementById('editId').value=id;
       document.getElementById('charName').value=c.name_en||c.name||'';
       document.getElementById('charRarity').value=c.rarity||'SSR';
