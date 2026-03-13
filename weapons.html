@@ -419,18 +419,18 @@
       position: relative;
       overflow: hidden;
     }
-    .char-card {
-  width: 120px;
-  flex: 0 0 auto;
-}
+    /*หน้าตัวละคร*/
+
     .char-carousel {
       display: flex;
       gap: 12px;
       overflow-x: auto;
       scroll-behavior: smooth;
       padding: 4px 0 12px;
+      min-width: 0;
       scrollbar-width: thin;
       scrollbar-color: var(--border) transparent;
+      scroll-snap-type: x mandatory;
     }
     .char-carousel::-webkit-scrollbar {
       height: 4px;
@@ -470,12 +470,13 @@
       background: rgba(240,192,64,0.15);
       border-color: var(--gold);
     }
-    .carousel-arrow.left { left: -12px; }
-    .carousel-arrow.right { right: -12px; }
+    .carousel-arrow.left { left: 4px; }
+    .carousel-arrow.right { right: 4px; }}
 
     /* Character portrait card */
     .char-portrait {
       flex-shrink: 0;
+      flex: 0 0 auto;
       width: 90px;
       background: var(--dark2);
       border: 1px solid var(--border);
@@ -486,6 +487,8 @@
       cursor: pointer;
       text-decoration: none;
       color: var(--text);
+    
+    }
     }
     .char-portrait:hover {
       transform: translateY(-4px);
