@@ -398,11 +398,25 @@ var I18n = (function () {
 
   /* Load external JSON translation files to merge with built-in translations */
   async function loadExternalTranslations() {
+    /* Detect base path from current script location */
+    var basePath = '';
+    try {
+      var scripts = document.querySelectorAll('script[src*="i18n.js"]');
+      if (scripts.length > 0) {
+        var src = scripts[0].getAttribute('src');
+        var idx = src.lastIndexOf('/');
+        if (idx >= 0) {
+          /* src is like 'js/i18n.js', base is '' (root relative) */
+          basePath = src.substring(0, idx).replace(/\/js$/, '') + '/';
+          if (basePath === '/') basePath = '';
+        }
+      }
+    } catch(e) {}
     var langs = ['en', 'th'];
     for (var i = 0; i < langs.length; i++) {
       var lang = langs[i];
       try {
-        var resp = await fetch('i18n/' + lang + '.json');
+        var resp = await fetch(basePath + 'i18n/' + lang + '.json');
         if (resp.ok) {
           var data = await resp.json();
           if (!translations[lang]) translations[lang] = {};
@@ -473,26 +487,40 @@ var I18n = (function () {
     document.querySelectorAll('[data-i18n]').forEach(function(el) {
       var key = el.dataset.i18n;
       var val = t(key);
-      if (el.tagName === 'INPUT' && el.type !== 'hidden') {
+      var tag = el.tagName;
+      /* Input/textarea placeholders */
+      if ((tag === 'INPUT' && el.type !== 'hidden') || tag === 'TEXTAREA') {
         el.placeholder = val;
-      } else {
-        /* Preserve child elements (like icons) by only replacing text nodes */
-        var hasOnlyText = el.childElementCount === 0;
-        if (hasOnlyText) {
-          el.textContent = val;
-        } else {
-          /* Find first text node and update it */
-          for (var i = 0; i < el.childNodes.length; i++) {
-            if (el.childNodes[i].nodeType === 3 && el.childNodes[i].textContent.trim()) {
-              el.childNodes[i].textContent = ' ' + val;
-              break;
-            }
-          }
-          /* If no text node found, just set textContent of a span or append */
-          var span = el.querySelector('.i18n-text');
-          if (span) span.textContent = val;
+        return;
+      }
+      /* Option elements */
+      if (tag === 'OPTION') {
+        el.textContent = val;
+        return;
+      }
+      /* Elements with no child elements - safe to replace textContent */
+      if (el.childElementCount === 0) {
+        el.textContent = val;
+        return;
+      }
+      /* Elements with child elements - try to find the right text target */
+      /* Priority 1: look for a child span/element that also has data-i18n (skip, it will be handled separately) */
+      /* Priority 2: look for .i18n-text span */
+      var i18nSpan = el.querySelector('.i18n-text');
+      if (i18nSpan) {
+        i18nSpan.textContent = val;
+        return;
+      }
+      /* Priority 3: find and update first meaningful text node */
+      var found = false;
+      for (var i = 0; i < el.childNodes.length; i++) {
+        if (el.childNodes[i].nodeType === 3 && el.childNodes[i].textContent.trim()) {
+          el.childNodes[i].textContent = ' ' + val + ' ';
+          found = true;
+          break;
         }
       }
+      /* Priority 4: if no text node, skip (child elements will handle themselves) */
     });
     /* data-i18n-placeholder */
     document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
