@@ -1095,21 +1095,24 @@ if (typeof SupaDB !== 'undefined' && SupaDB.getClient && SupaDB.isConnected()) {
         html += '<button class="carousel-arrow left" onclick="WeaponsPage.scrollCarousel(this, -1)">&#10094;</button>';
         html += '<div class="char-carousel">';
 
-        links.forEach(function (link) {
-         var char = allCharacters.find(function (c) { 
-  return String(c.id) === String(link.character_id); 
+      links.forEach(function (link) {
+
+  var char = allCharacters.find(function (c) { 
+    return String(c.id) === String(link.character_id);
+  });
+
+  if (!char) return;
+
+  var badgeClass = link.is_signature ? 'signature' : 'recommended';
+  var badgeText = link.is_signature ? 'SIGNATURE' : 'REC #' + (link.priority || 1);
+
+  html += '<a href="character.html?slug=' + encodeURIComponent(char.slug) + '" class="char-portrait">';
+  html += '<img class="char-portrait-img" src="' + (char.image || 'https://placehold.co/90x120/111827/666?text=?') + '" alt="' + (char.name_en || char.name || '') + '" loading="lazy" onerror="this.src=\'https://placehold.co/90x120/111827/666?text=?\'">';
+  html += '<span class="char-portrait-badge ' + badgeClass + '">' + badgeText + '</span>';
+  html += '<div class="char-portrait-name">' + (char.name_en || char.name || '?') + '</div>';
+  html += '</a>';
+
 });
-          if (!char) return;
-
-          var badgeClass = link.is_signature ? 'signature' : 'recommended';
-          var badgeText = link.is_signature ? 'SIGNATURE' : 'REC #' + link.priority;
-
-          html += '<a href="character.html?slug=' + encodeURIComponent(char.slug) + '" class="char-portrait">';
-          html += '<img class="char-portrait-img" src="' + (char.image || 'https://placehold.co/90x120/111827/666?text=?') + '" alt="' + (char.name_en||char.name||'') + '" loading="lazy" onerror="this.src=\'https://placehold.co/90x120/111827/666?text=?\'">';
-          html += '<span class="char-portrait-badge ' + badgeClass + '">' + badgeText + '</span>';
-          html += '<div class="char-portrait-name">' + (char.name_en||char.name||'?') + '</div>';
-          html += '</a>';
-        });
 
         html += '</div>'; // char-carousel
         html += '<button class="carousel-arrow right" onclick="WeaponsPage.scrollCarousel(this, 1)">&#10095;</button>';
