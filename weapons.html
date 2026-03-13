@@ -649,8 +649,8 @@
 
     <!-- Header -->
     <div class="page-header">
-      <div class="page-header-title">&#128481; Weapons Database</div>
-      <div class="page-header-sub">Browse All Weapons &bull; Filter by Category &bull; View Recommended Characters</div>
+      <div class="page-header-title"><span class="nav-icon">&#128481;</span> <span data-i18n="wpn_title">Weapons Database</span></div>
+      <div class="page-header-sub" data-i18n="wpn_subtitle">Browse All Weapons</div>
       <div class="page-header-count" id="weaponCount">Loading...</div>
     </div>
 
@@ -659,7 +659,7 @@
       <!-- Toolbar -->
       <div class="weapons-toolbar">
         <div class="weapons-search-row">
-          <input type="text" class="weapons-search" id="weaponSearch" placeholder="&#128269; Search weapons by name or series...">
+          <input type="text" class="weapons-search" id="weaponSearch" data-i18n-placeholder="wpn_search" placeholder="&#128269; Search weapons by name or series...">
           <select class="weapons-sort" id="weaponSort">
             <option value="name-asc">Name A-Z</option>
             <option value="name-desc">Name Z-A</option>
@@ -718,14 +718,14 @@
 
   <!-- Footer -->
   <footer class="site-footer">
-    <p>7DS Origin Database &mdash; Fan-made site &mdash; Not affiliated with Netmarble</p>
+    <p data-i18n="footer_text">7DS Origin Database &mdash; Fan-made site &mdash; Not affiliated with Netmarble</p>
     <p style="margin-top:8px;">
-      <a href="index.html">Home</a> &nbsp;&bull;&nbsp;
-      <a href="characters.html">Characters</a> &nbsp;&bull;&nbsp;
-      <a href="weapons.html">Weapons</a> &nbsp;&bull;&nbsp;
-      <a href="tierlist.html">Tier List</a> &nbsp;&bull;&nbsp;
-      <a href="events.html">Events</a> &nbsp;&bull;&nbsp;
-      <a href="guides.html">Guides</a>
+      <a href="index.html" data-i18n="nav_home">Home</a> &nbsp;&bull;&nbsp;
+      <a href="characters.html" data-i18n="nav_characters">Characters</a> &nbsp;&bull;&nbsp;
+      <a href="weapons.html" data-i18n="nav_weapons">Weapons</a> &nbsp;&bull;&nbsp;
+      <a href="tierlist.html" data-i18n="nav_tierlist">Tier List</a> &nbsp;&bull;&nbsp;
+      <a href="events.html" data-i18n="nav_events">Events</a> &nbsp;&bull;&nbsp;
+      <a href="guides.html" data-i18n="nav_guides">Guides</a>
     </p>
   </footer>
 
@@ -1055,7 +1055,7 @@ if (typeof SupaDB !== 'undefined' && SupaDB.getClient && SupaDB.isConnected()) {
         var passiveText = w.passive_en || w.passive_desc_en || '';
         if (passiveText) {
           html += '<div class="detail-card">';
-          html += '<div class="detail-card-title">Passive Ability</div>';
+          html += '<div class="detail-card-title">' + ((typeof I18n !== 'undefined') ? I18n.t('wpn_passive') : 'Passive Ability') + '</div>';
           html += '<p>' + passiveText + '</p>';
           html += '</div>';
         }
@@ -1064,7 +1064,7 @@ if (typeof SupaDB !== 'undefined' && SupaDB.getClient && SupaDB.isConnected()) {
 
         // Right: Character Carousel
         html += '<div class="char-carousel-section">';
-        html += '<div class="char-carousel-title">Recommended Characters</div>';
+        html += '<div class="char-carousel-title">' + ((typeof I18n !== 'undefined') ? I18n.t('wpn_recommended') : 'Recommended Characters') + '</div>';
         html += buildCharacterCarousel(w);
         html += '</div>';
 
@@ -1086,7 +1086,7 @@ if (typeof SupaDB !== 'undefined' && SupaDB.getClient && SupaDB.isConnected()) {
       });
 
       if (links.length === 0 && allCharacters.length === 0) {
-        return '<div class="char-empty">No character data linked yet. Manage links in the Admin Dashboard.</div>';
+        return '<div class="char-empty">' + ((typeof I18n !== 'undefined') ? I18n.t('wpn_no_char') : 'No character data linked yet.') + '</div>';
       }
 
       // If we have links, show linked characters
@@ -1134,7 +1134,7 @@ if (typeof SupaDB !== 'undefined' && SupaDB.getClient && SupaDB.isConnected()) {
       matchingChars.forEach(function (char) {
         html += '<a href="character.html?slug=' + encodeURIComponent(char.slug) + '" class="char-portrait">';
         html += '<img class="char-portrait-img" src="' + (char.image || 'https://placehold.co/90x120/111827/666?text=?') + '" alt="' + (char.name_en||char.name||'') + '" loading="lazy" onerror="this.src=\'https://placehold.co/90x120/111827/666?text=?\'">';
-        html += '<span class="char-portrait-badge recommended">COMPATIBLE</span>';
+        html += '<span class="char-portrait-badge recommended">' + ((typeof I18n !== 'undefined') ? I18n.t('wpn_compatible') : 'COMPATIBLE') + '</span>';
         html += '<div class="char-portrait-name">' + (char.name_en||char.name||'?') + '</div>';
         html += '</a>';
       });
