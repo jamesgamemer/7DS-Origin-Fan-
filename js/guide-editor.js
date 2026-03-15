@@ -15,6 +15,7 @@
   // ── DOM refs ──
   var blocksArea, addBlockBtn, blockPickerOverlay, blockPickerClose;
   var metaTitle, metaCategory, metaDescription, metaCoverUrl, metaCoverUpload, metaCoverPreview;
+  var metaCoverPosX, metaCoverPosY;
   var saveDraftBtn, publishBtn, saveStatus;
   var modeEditBtn, modePreviewBtn, editModePanel, previewModePanel, previewContent;
   var editorTitleEl;
