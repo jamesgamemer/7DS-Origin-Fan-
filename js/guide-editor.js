@@ -41,6 +41,8 @@
     metaCoverUrl = document.getElementById('metaCoverUrl');
     metaCoverUpload = document.getElementById('metaCoverUpload');
     metaCoverPreview = document.getElementById('metaCoverPreview');
+   metaCoverPosX = document.getElementById('metaCoverPosX');
+   metaCoverPosY = document.getElementById('metaCoverPosY');
     saveDraftBtn = document.getElementById('saveDraftBtn');
     publishBtn = document.getElementById('publishBtn');
     saveStatus = document.getElementById('saveStatus');
